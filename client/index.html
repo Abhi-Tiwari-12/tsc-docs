@@ -20,7 +20,7 @@
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased;font-size:13px}
 
 /* ── HEADER ── */
-header{position:fixed;top:0;left:0;right:0;height:var(--hh);background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding-right:16px;z-index:200}
+header{position:fixed;top:0;left:0;right:0;height:var(--hh);background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding-right:16px;z-index:200;transition:opacity .2s}
 .brand{width:var(--sw);display:flex;align-items:center;gap:9px;padding:0 16px;height:100%;border-right:1px solid var(--border);flex-shrink:0}
 .bmark{width:27px;height:27px;background:var(--green);border-radius:6px;display:flex;align-items:center;justify-content:center}
 .bmark svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -35,10 +35,10 @@ header{position:fixed;top:0;left:0;right:0;height:var(--hh);background:var(--whi
 .btn-danger{background:0;color:#dc2626;border-color:#fca5a5}.btn-danger:hover{background:#fff5f5;border-color:#dc2626}
 
 /* ── LAYOUT ── */
-.layout{display:flex;position:fixed;top:var(--hh);bottom:var(--fh);left:0;right:0;overflow:hidden}
+.layout{display:flex;position:fixed;top:var(--hh);bottom:var(--fh);left:0;right:0;overflow:hidden;transition:top .25s, bottom .25s}
 
 /* ── SIDEBAR ── */
-aside{width:var(--sw);min-width:var(--sw);background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+aside{width:var(--sw);min-width:var(--sw);background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;transition:width .25s,min-width .25s,opacity .25s}
 .sbnav{padding:10px 8px 4px}
 .ni{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--r);cursor:pointer;font-size:13px;font-weight:500;color:var(--t3);transition:all .12s;user-select:none;margin-bottom:1px}
 .ni:hover{background:var(--s2);color:var(--text)}.ni.active{background:var(--gdim);color:var(--green);font-weight:600}
@@ -85,15 +85,15 @@ main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--
 .sdot{width:6px;height:6px;border-radius:50%;background:#22c55e;transition:background .2s}.sdot.dirty{background:#f59e0b}
 .tbar{background:var(--white);border-bottom:1px solid var(--border);padding:5px 28px;display:flex;align-items:center;gap:1px;flex-wrap:wrap}
 .tbsep{width:1px;height:18px;background:var(--border);margin:0 5px}
-.tb{width:26px;height:26px;border-radius:4px;background:none;border:none;cursor:pointer;color:var(--t3);font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .1s}
+.tb{width:26px;height:26px;border-radius:4px;background:none;border:none;cursor:pointer;color:var(--t3);font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .1s;position:relative}
 .tb:hover{background:var(--s2);color:var(--text)}
 .tb svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 select.tbsel{appearance:none;background:var(--s2);border:1px solid var(--border);outline:none;color:var(--t2);font-size:11.5px;font-family:inherit;cursor:pointer;padding:0 8px;height:26px;border-radius:4px}
 select.tbsel option{background:var(--white)}
-.escroll{flex:1;overflow-y:auto;background:var(--bg);padding:28px 0 16px}
+.escroll{flex:1;overflow-y:auto;background:var(--bg);padding:28px 0 16px;transition:padding .25s}
 .escroll::-webkit-scrollbar{width:6px}.escroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-.epage{max-width:720px;margin:0 auto;padding:0 36px}
-.ebody{background:var(--white);border-radius:8px;border:1px solid var(--border);padding:40px 48px;min-height:500px;outline:none;font-size:14px;line-height:1.85;color:var(--text);caret-color:var(--green);box-shadow:var(--sh)}
+.epage{max-width:720px;margin:0 auto;padding:0 36px;transition:max-width .25s}
+.ebody{background:var(--white);border-radius:8px;border:1px solid var(--border);padding:40px 48px;min-height:500px;outline:none;font-size:14px;line-height:1.85;color:var(--text);caret-color:var(--green);box-shadow:var(--sh);transition:font-size .15s,padding .25s}
 .ebody:empty::before{content:attr(data-placeholder);color:var(--t4);pointer-events:none}
 .ebody h1{font-size:24px;font-weight:800;margin:22px 0 10px;letter-spacing:-.4px}
 .ebody h2{font-size:18px;font-weight:700;margin:18px 0 8px;letter-spacing:-.2px}
@@ -106,6 +106,46 @@ select.tbsel option{background:var(--white)}
 .ebody a{color:var(--green);text-decoration:underline}
 .ebody hr{border:none;border-top:1px solid var(--border);margin:22px 0}
 .efooter{max-width:720px;margin:0 auto;width:100%;padding:7px 36px;display:flex;justify-content:space-between;font-size:11px;color:var(--t4);font-family:'JetBrains Mono',monospace}
+
+/* ── RESIZABLE ELEMENTS ── */
+.resizable-wrap{display:inline-block;position:relative;line-height:0;user-select:none}
+.resizable-wrap.active{outline:2px solid var(--green);outline-offset:1px}
+.resizable-wrap img{display:block;max-width:100%}
+.resize-handle{position:absolute;width:9px;height:9px;background:var(--green);border:1.5px solid #fff;border-radius:2px;z-index:10;cursor:nwse-resize}
+.resize-handle.tl{top:-5px;left:-5px;cursor:nwse-resize}
+.resize-handle.tr{top:-5px;right:-5px;cursor:nesw-resize}
+.resize-handle.bl{bottom:-5px;left:-5px;cursor:nesw-resize}
+.resize-handle.br{bottom:-5px;right:-5px;cursor:nwse-resize}
+.resize-handle.ml{top:50%;left:-5px;transform:translateY(-50%);cursor:ew-resize}
+.resize-handle.mr{top:50%;right:-5px;transform:translateY(-50%);cursor:ew-resize}
+.resize-handle.tm{top:-5px;left:50%;transform:translateX(-50%);cursor:ns-resize}
+.resize-handle.bm{bottom:-5px;left:50%;transform:translateX(-50%);cursor:ns-resize}
+.ebody table{border-collapse:collapse;width:auto;min-width:120px}
+.ebody table td,.ebody table th{border:1px solid var(--border);padding:6px 10px;min-width:40px}
+.ebody table th{background:var(--s2);font-weight:600}
+
+/* ── FONT SIZE CONTROLS ── */
+.fsz-wrap{display:flex;align-items:center;gap:2px}
+.fsz-lbl{font-size:10.5px;font-family:'JetBrains Mono',monospace;color:var(--t4);min-width:26px;text-align:center}
+
+/* ── COLOR PICKER WRAPPER ── */
+.color-wrap{position:relative;display:inline-flex}
+.color-dot{width:10px;height:10px;border-radius:2px;pointer-events:none;position:absolute;bottom:3px;left:50%;transform:translateX(-50%)}
+.color-inp{opacity:0;position:absolute;inset:0;width:100%;height:100%;cursor:pointer;border:none;padding:0}
+
+/* ── FULLSCREEN MODE ── */
+body.fullscreen header{opacity:0;pointer-events:none}
+body.fullscreen .layout{top:0;bottom:0}
+body.fullscreen aside{width:0;min-width:0;opacity:0;overflow:hidden}
+body.fullscreen footer{opacity:0;pointer-events:none}
+body.fullscreen .ew .dtb{padding:0 48px}
+body.fullscreen .ew .tbar{padding:5px 48px}
+body.fullscreen .ew .escroll{padding:32px 0 16px}
+body.fullscreen .ew .epage{max-width:860px}
+body.fullscreen .ew .ebody{padding:48px 60px;border-radius:0;border-left:none;border-right:none;box-shadow:none}
+.tb-full-exit{display:none}
+body.fullscreen .tb-full-exit{display:flex}
+body.fullscreen .tb-full-enter{display:none}
 
 /* ── FLOW BUILDER ── */
 .fw{flex:1;display:flex;flex-direction:column;overflow:hidden;animation:fsl .2s ease}
@@ -162,7 +202,7 @@ select.tbsel option{background:var(--white)}
 .zl{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--t4);text-align:center;padding:2px 0;border-top:1px solid var(--border)}
 
 /* ── FOOTER ── */
-footer{position:fixed;bottom:0;left:0;right:0;height:var(--fh);background:var(--white);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11.5px;color:var(--t4);z-index:200}
+footer{position:fixed;bottom:0;left:0;right:0;height:var(--fh);background:var(--white);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11.5px;color:var(--t4);z-index:200;transition:opacity .2s}
 footer span{color:var(--t2);font-weight:500}
 
 /* ── MODAL ── */
@@ -265,6 +305,26 @@ const API = '/api';
 // ════════════════════════════════════════════
 const S = { section:'flows', items:{}, activeId:null, newType:'flows' };
 
+// Doc editor font size state (not used globally anymore — per-selection only)
+let docFontSize = 14; // used only to show label
+
+// ── Saved selection (preserved before toolbar color inputs steal focus) ──
+let _savedRange = null;
+function saveSelection(){
+  const sel = window.getSelection();
+  if(sel && sel.rangeCount > 0){
+    _savedRange = sel.getRangeAt(0).cloneRange();
+  }
+}
+function restoreSelection(){
+  const b = document.getElementById('ebody');
+  if(!b || !_savedRange) return;
+  b.focus();
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(_savedRange);
+}
+
 // ════════════════════════════════════════════
 //  TOAST
 // ════════════════════════════════════════════
@@ -356,6 +416,8 @@ function showEmpty(show=true){
   document.getElementById('empty').style.display=show?'flex':'none';
   document.querySelectorAll('.ew,.fw,.empty:not(#empty)').forEach(el=>el.remove());
   if(show)stopFlow();
+  // exit fullscreen if returning to empty
+  if(show && document.body.classList.contains('fullscreen')) toggleFullscreen();
 }
 
 // ════════════════════════════════════════════
@@ -389,7 +451,14 @@ async function delItem(e,id){
 }
 
 document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal'))closeModal()});
-document.addEventListener('keydown',e=>{ if((e.metaKey||e.ctrlKey)&&e.key==='n'){e.preventDefault();openModal()} if(e.key==='Escape')closeModal(); if((e.metaKey||e.ctrlKey)&&e.key==='s'&&FI){e.preventDefault();fSaveNow();} });
+document.addEventListener('keydown',e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key==='n'){e.preventDefault();openModal()}
+  if(e.key==='Escape'){
+    closeModal();
+    if(document.body.classList.contains('fullscreen')) toggleFullscreen();
+  }
+  if((e.metaKey||e.ctrlKey)&&e.key==='s'&&FI){e.preventDefault();fSaveNow();}
+});
 
 // ════════════════════════════════════════════
 //  AUTO-SAVE helper
@@ -410,9 +479,71 @@ function scheduleSave(id, payload, dotId, statusId){
 }
 
 // ════════════════════════════════════════════
+//  FULLSCREEN TOGGLE
+// ════════════════════════════════════════════
+function toggleFullscreen(){
+  document.body.classList.toggle('fullscreen');
+  const isFs = document.body.classList.contains('fullscreen');
+  toast(isFs ? 'Focus mode on — press Esc to exit' : 'Focus mode off');
+}
+
+// ════════════════════════════════════════════
+//  DOC FONT SIZE — applies to selected text only (like Word)
+// ════════════════════════════════════════════
+function setDocFontSize(delta){
+  // Read current size from label, change it, apply to selection via span
+  docFontSize = Math.min(72, Math.max(8, docFontSize + delta));
+  const lbl = document.getElementById('fsz-lbl');
+  if(lbl) lbl.textContent = docFontSize + 'px';
+
+  const b = document.getElementById('ebody');
+  if(!b) return;
+  b.focus();
+  const sel = window.getSelection();
+  if(!sel || sel.isCollapsed) return; // nothing selected — do nothing
+
+  // Wrap selected text in a span with the chosen font size
+  const range = sel.getRangeAt(0);
+  const span = document.createElement('span');
+  span.style.fontSize = docFontSize + 'px';
+  try {
+    range.surroundContents(span);
+  } catch(e) {
+    // If selection spans multiple elements, use execCommand as fallback
+    document.execCommand('fontSize', false, '7');
+    // Find all font size=7 elements and replace with span
+    b.querySelectorAll('font[size="7"]').forEach(f => {
+      const s = document.createElement('span');
+      s.style.fontSize = docFontSize + 'px';
+      s.innerHTML = f.innerHTML;
+      f.replaceWith(s);
+    });
+  }
+  // Trigger save
+  b.dispatchEvent(new Event('input'));
+}
+
+// Update the font size label when cursor moves (shows size at cursor)
+function updateFszLabel(){
+  const lbl = document.getElementById('fsz-lbl');
+  if(!lbl) return;
+  const sel = window.getSelection();
+  if(sel && sel.rangeCount > 0){
+    let node = sel.getRangeAt(0).startContainer;
+    if(node.nodeType === 3) node = node.parentElement;
+    const computed = parseFloat(window.getComputedStyle(node).fontSize);
+    if(!isNaN(computed)){
+      docFontSize = Math.round(computed);
+      lbl.textContent = docFontSize + 'px';
+    }
+  }
+}
+
+// ════════════════════════════════════════════
 //  DOC EDITOR
 // ════════════════════════════════════════════
 function renderDoc(item){
+  docFontSize = 14; // reset on each doc open
   const m=document.getElementById('main'),w=document.createElement('div');
   w.className='ew';
   w.innerHTML=`
@@ -424,16 +555,22 @@ function renderDoc(item){
       </div>
     </div>
     <div class="tbar">
+
+      <!-- Block format -->
       <select class="tbsel" onchange="fB(this.value);this.value='p'">
         <option value="p">Paragraph</option><option value="h1">Heading 1</option>
         <option value="h2">Heading 2</option><option value="h3">Heading 3</option>
       </select>
       <div class="tbsep"></div>
+
+      <!-- Basic formatting -->
       <button class="tb" onclick="f('bold')" title="Bold"><b style="font-size:13px">B</b></button>
       <button class="tb" onclick="f('italic')" title="Italic"><i style="font-size:13px">I</i></button>
       <button class="tb" onclick="f('underline')" title="Underline"><u style="font-size:12px">U</u></button>
       <button class="tb" onclick="f('strikeThrough')" title="Strike"><s style="font-size:12px">S</s></button>
       <div class="tbsep"></div>
+
+      <!-- Lists / Quote / Code / Link / HR -->
       <button class="tb" onclick="f('insertUnorderedList')" title="Bullets"><svg viewBox="0 0 16 16"><circle cx="2.5" cy="4" r="1.2" fill="currentColor"/><line x1="5" y1="4" x2="14" y2="4"/><circle cx="2.5" cy="8" r="1.2" fill="currentColor"/><line x1="5" y1="8" x2="14" y2="8"/><circle cx="2.5" cy="12" r="1.2" fill="currentColor"/><line x1="5" y1="12" x2="14" y2="12"/></svg></button>
       <button class="tb" onclick="f('insertOrderedList')" title="Numbered"><svg viewBox="0 0 16 16"><text x="1" y="5.5" font-size="5" fill="currentColor">1.</text><line x1="5" y1="4" x2="14" y2="4"/><text x="1" y="9.5" font-size="5" fill="currentColor">2.</text><line x1="5" y1="8" x2="14" y2="8"/><text x="1" y="13.5" font-size="5" fill="currentColor">3.</text><line x1="5" y1="12" x2="14" y2="12"/></svg></button>
       <button class="tb" onclick="f('formatBlock','blockquote')" title="Quote"><svg viewBox="0 0 16 16"><path d="M2 4h5v5H2zm7 0h5v5h-5zM2 4v5c0 3 2 4 4 5M9 4v5c0 3 2 4 4 5" stroke-linecap="round"/></svg></button>
@@ -441,6 +578,45 @@ function renderDoc(item){
       <button class="tb" onclick="iCode()" title="Code"><span style="font-family:'JetBrains Mono',monospace;font-size:10px">&lt;/&gt;</span></button>
       <button class="tb" onclick="iLink()" title="Link"><svg viewBox="0 0 16 16"><path d="M6 9a3 3 0 0 0 4.5.4l2-2a3 3 0 0 0-4.2-4.2l-1.1 1.1"/><path d="M10 7a3 3 0 0 0-4.5-.4l-2 2a3 3 0 0 0 4.2 4.2l1.1-1.1"/></svg></button>
       <button class="tb" onclick="f('insertHorizontalRule')" title="HR"><svg viewBox="0 0 16 16"><line x1="2" y1="8" x2="14" y2="8" stroke-width="2"/></svg></button>
+      <div class="tbsep"></div>
+
+      <!-- ── NEW: Text colour ── -->
+      <div class="tb color-wrap" title="Text colour" onmousedown="saveSelection()">
+        <svg viewBox="0 0 16 16" style="pointer-events:none"><text x="2" y="12" font-size="11" font-weight="700" fill="currentColor" font-family="serif">A</text></svg>
+        <div class="color-dot" id="txtColorDot" style="background:#18251e"></div>
+        <input class="color-inp" type="color" id="txtColorInp" value="#18251e"
+          oninput="document.getElementById('txtColorDot').style.background=this.value"
+          onchange="applyTextColor(this.value)"/>
+      </div>
+
+      <!-- ── NEW: Highlight colour ── -->
+      <div class="tb color-wrap" title="Highlight colour" onmousedown="saveSelection()">
+        <svg viewBox="0 0 16 16" style="pointer-events:none;width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><path d="M10.5 2.5l3 3-7 7H3.5v-3l7-7z"/><line x1="8" y1="5" x2="11" y2="8"/></svg>
+        <div class="color-dot" id="hlColorDot" style="background:#fef08a"></div>
+        <input class="color-inp" type="color" id="hlColorInp" value="#fef08a"
+          oninput="document.getElementById('hlColorDot').style.background=this.value"
+          onchange="applyHighlight(this.value)"/>
+      </div>
+      <button class="tb" onmousedown="saveSelection()" onclick="clearHighlight()" title="Remove highlight" style="font-size:10px;color:var(--t3)">✕<span style="font-size:8px">hl</span></button>
+
+      <div class="tbsep"></div>
+
+      <!-- ── NEW: Font size ── -->
+      <div class="fsz-wrap">
+        <button class="tb" onclick="setDocFontSize(-1)" title="Decrease font size" style="font-size:11px;font-weight:700">A−</button>
+        <span class="fsz-lbl" id="fsz-lbl">14px</span>
+        <button class="tb" onclick="setDocFontSize(1)" title="Increase font size" style="font-size:13px;font-weight:700">A+</button>
+      </div>
+      <div class="tbsep"></div>
+
+      <!-- ── NEW: Fullscreen ── -->
+      <button class="tb tb-full-enter" onclick="toggleFullscreen()" title="Focus / fullscreen mode (F11)">
+        <svg viewBox="0 0 16 16"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg>
+      </button>
+      <button class="tb tb-full-exit" onclick="toggleFullscreen()" title="Exit focus mode (Esc)" style="color:var(--green)">
+        <svg viewBox="0 0 16 16"><path d="M6 2v4H2M14 6h-4V2M10 14v-4h4M2 10h4v4"/></svg>
+      </button>
+
     </div>
     <div class="escroll"><div class="epage">
       <div class="ebody" id="ebody" contenteditable="true" data-placeholder="Start writing your document…"></div>
@@ -453,6 +629,20 @@ function renderDoc(item){
     document.getElementById('wclbl').textContent=wc+' word'+(wc!==1?'s':'');
     scheduleSave(item._id,{content:b.innerHTML},'sdot','sstat');
   });
+  // Update font-size label as cursor moves
+  b.addEventListener('keyup', updateFszLabel);
+  b.addEventListener('mouseup', updateFszLabel);
+  // Save selection before toolbar interactions
+  b.addEventListener('mouseup', saveSelection);
+  b.addEventListener('keyup', saveSelection);
+  // Resizable images & tables on click
+  b.addEventListener('click', e => {
+    const img   = e.target.tagName==='IMG' ? e.target : null;
+    const table = e.target.tagName==='TABLE' ? e.target : e.target.closest('table');
+    if(img)   activateResizable(img,   'img');
+    else if(table) activateResizable(table, 'table');
+    else      deactivateResizable();
+  });
   document.getElementById('dti').addEventListener('input',function(){
     document.getElementById('hbd').textContent=this.value||'Untitled';
     S.items[item._id].title=this.value;
@@ -462,10 +652,125 @@ function renderDoc(item){
   const wc=b.innerText.trim().split(/\s+/).filter(Boolean).length;
   document.getElementById('wclbl').textContent=wc+' word'+(wc!==1?'s':'');
 }
-function f(cmd,val){document.execCommand(cmd,false,val||null);document.getElementById('ebody')?.focus()}
+
+function f(cmd,val){document.getElementById('ebody')?.focus();document.execCommand(cmd,false,val||null);}
 function fB(tag){document.execCommand('formatBlock',false,tag);document.getElementById('ebody')?.focus()}
 function iCode(){const s=window.getSelection()?.toString();document.execCommand('insertHTML',false,`<code>${s||'code'}</code>`)}
 function iLink(){const u=prompt('URL:');if(u)document.execCommand('createLink',false,u)}
+
+// ── Text colour ────────────────────────────
+// The color <input type=color> steals focus from the editor when opened,
+// which collapses the selection. We save the range on mousedown of the
+// color wrapper BEFORE the input opens, then restore it before applying.
+function applyTextColor(color){
+  restoreSelection();
+  document.execCommand('styleWithCSS', false, true);
+  document.execCommand('foreColor', false, color);
+  document.execCommand('styleWithCSS', false, false);
+}
+
+// ── Highlight (background colour) ─────────
+function applyHighlight(color){
+  restoreSelection();
+  document.execCommand('styleWithCSS', false, true);
+  if(!document.execCommand('hiliteColor', false, color)){
+    document.execCommand('backColor', false, color);
+  }
+  document.execCommand('styleWithCSS', false, false);
+}
+
+function clearHighlight(){
+  restoreSelection();
+  document.execCommand('styleWithCSS', false, true);
+  document.execCommand('hiliteColor', false, 'transparent');
+  document.execCommand('backColor', false, 'transparent');
+  document.execCommand('styleWithCSS', false, false);
+}
+
+// ════════════════════════════════════════════
+//  RESIZABLE ELEMENTS (images & tables)
+// ════════════════════════════════════════════
+let _rActive = null; // currently selected resizable element
+let _rDrag   = null; // { el, wrap, handle, startX, startY, startW, startH }
+
+function activateResizable(el, type){
+  deactivateResizable();
+  // Wrap element if not already wrapped
+  let wrap = el.closest('.resizable-wrap');
+  if(!wrap){
+    wrap = document.createElement('div');
+    wrap.className = 'resizable-wrap';
+    if(type === 'table') wrap.style.display = 'block';
+    el.parentNode.insertBefore(wrap, el);
+    wrap.appendChild(el);
+  }
+  wrap.classList.add('active');
+  // Add 8 handles
+  ['tl','tr','bl','br','ml','mr','tm','bm'].forEach(pos => {
+    const h = document.createElement('div');
+    h.className = `resize-handle ${pos}`;
+    h.dataset.pos = pos;
+    h.addEventListener('mousedown', e => startResize(e, el, wrap, pos));
+    wrap.appendChild(h);
+  });
+  _rActive = { el, wrap, type };
+  // Prevent contenteditable from catching clicks inside wrap
+  wrap.addEventListener('mousedown', e => e.stopPropagation(), {once:false});
+}
+
+function deactivateResizable(){
+  if(!_rActive) return;
+  const {wrap} = _rActive;
+  wrap.classList.remove('active');
+  wrap.querySelectorAll('.resize-handle').forEach(h => h.remove());
+  _rActive = null;
+}
+
+function startResize(e, el, wrap, pos){
+  e.preventDefault(); e.stopPropagation();
+  const rect = el.getBoundingClientRect();
+  _rDrag = {
+    el, wrap, pos,
+    startX: e.clientX, startY: e.clientY,
+    startW: rect.width, startH: rect.height,
+  };
+  document.addEventListener('mousemove', doResize);
+  document.addEventListener('mouseup',   endResize);
+}
+
+function doResize(e){
+  if(!_rDrag) return;
+  const {el, pos, startX, startY, startW, startH} = _rDrag;
+  const dx = e.clientX - startX, dy = e.clientY - startY;
+  let newW = startW, newH = startH;
+
+  if(pos.includes('r')) newW = Math.max(40, startW + dx);
+  if(pos.includes('l')) newW = Math.max(40, startW - dx);
+  if(pos.includes('b')) newH = Math.max(20, startH + dy);
+  if(pos.includes('t')) newH = Math.max(20, startH - dy);
+  // middle handles — only one axis
+  if(pos==='ml'||pos==='mr') newH = startH;
+  if(pos==='tm'||pos==='bm') newW = startW;
+
+  el.style.width  = newW + 'px';
+  el.style.height = (pos==='ml'||pos==='mr') ? '' : newH + 'px';
+}
+
+function endResize(){
+  document.removeEventListener('mousemove', doResize);
+  document.removeEventListener('mouseup',   endResize);
+  if(_rDrag){
+    // Trigger save after resize
+    document.getElementById('ebody')?.dispatchEvent(new Event('input'));
+    _rDrag = null;
+  }
+}
+
+// Deactivate resizable when clicking outside ebody
+document.addEventListener('mousedown', e => {
+  const b = document.getElementById('ebody');
+  if(b && !b.contains(e.target)) deactivateResizable();
+});
 
 // ════════════════════════════════════════════
 //  FLOW BUILDER
@@ -552,10 +857,9 @@ function renderFlow(item){
     S.items[item._id].title = this.value;
     if(FI) FI.title = this.value;
     renderSB();
-    fSave(); // just marks dirty
+    fSave();
   });
 
-  // Build node type cards
   const g=document.getElementById('ntgrid');
   Object.entries(NT).forEach(([k,t])=>{
     const c=document.createElement('div'); c.className='ntcard';
@@ -588,22 +892,15 @@ function addN(type, x, y){
   drawFlow(); fSave();
 }
 
-// ── CORE DRAW — only redraws when NOT typing ──────────────────────
 function drawFlow(){
   const ng=document.getElementById('ng'), eg=document.getElementById('eg');
   if(!ng||!eg) return;
-
-  // Remember which node has focus and cursor position
-  const activeEl = document.activeElement;
-  const focusedNodeId   = activeEl?.dataset?.nid  || null;
-  const focusedField    = activeEl?.dataset?.field || null; // 'title' or 'body'
 
   ng.style.transform = `translate(${FS.px}px,${FS.py}px) scale(${FS.zoom})`;
   document.querySelector('#fsvg g')?.setAttribute('transform',
     `translate(${FS.px},${FS.py}) scale(${FS.zoom})`);
   document.getElementById('zlbl').textContent = Math.round(FS.zoom*100)+'%';
 
-  // ── Reconcile nodes: update existing DOM els, add new, remove old ──
   const existingEls = {};
   ng.querySelectorAll('.fn').forEach(el => { existingEls[el.dataset.nid] = el; });
 
@@ -612,7 +909,6 @@ function drawFlow(){
     renderedIds.add(n.id);
     let el = existingEls[n.id];
     if(el){
-      // Just reposition — don't touch innerHTML so focus/cursor is preserved
       el.style.left = n.x+'px';
       el.style.top  = n.y+'px';
       el.classList.toggle('sel', FS.sel===n.id);
@@ -622,12 +918,10 @@ function drawFlow(){
     }
   });
 
-  // Remove nodes no longer in state
   Object.keys(existingEls).forEach(id => {
     if(!renderedIds.has(id)) existingEls[id].remove();
   });
 
-  // Always redraw edges (SVG, no focus issues)
   eg.innerHTML='';
   FS.edges.forEach(e => eg.appendChild(mkEdge(e)));
 }
@@ -668,7 +962,6 @@ function mkNode(n){
       <div class="nport" title="Drag to connect"></div>
     </div>`;
 
-  // Title input — update state WITHOUT redrawing
   el.querySelector('.ntitle').addEventListener('input', function(ev){
     ev.stopPropagation();
     const node = FS.nodes.find(x=>x.id===n.id);
@@ -676,7 +969,6 @@ function mkNode(n){
     fSave();
   });
 
-  // Body input — update state WITHOUT redrawing
   el.querySelector('.nb').addEventListener('input', function(ev){
     ev.stopPropagation();
     const node = FS.nodes.find(x=>x.id===n.id);
@@ -684,17 +976,14 @@ function mkNode(n){
     fSave();
   });
 
-  // Delete button
   el.querySelector('.ndel').addEventListener('click', ev=>{
     ev.stopPropagation(); delN(n.id);
   });
 
-  // Port — start connection
   el.querySelector('.nport').addEventListener('mousedown', ev=>{
     startCon(ev, n.id);
   });
 
-  // Drag (only from non-editable areas)
   el.addEventListener('mousedown', ev => nMD(ev, n.id));
   el.addEventListener('click',     ev => selN(ev, n.id));
 
@@ -733,9 +1022,7 @@ function mkEdge(e){
   return g;
 }
 
-// ── NODE INTERACTION ─────────────────────────────────────────────
 function nMD(ev, id){
-  // Don't drag when clicking editable content or buttons
   if(ev.target.isContentEditable) return;
   if(ev.target.classList.contains('nport') || ev.target.closest('.nab')) return;
   ev.stopPropagation();
@@ -767,7 +1054,6 @@ function delE(id){
   FS.esel=null; drawFlow(); fSave();
 }
 
-// ── CONNECTION DRAWING ───────────────────────────────────────────
 function startCon(ev, fid){
   ev.stopPropagation(); ev.preventDefault();
   FS.con=fid;
@@ -780,7 +1066,6 @@ function startCon(ev, fid){
   document.getElementById('eg')?.appendChild(cline);
 }
 
-// ── CANVAS EVENTS ────────────────────────────────────────────────
 function fcMD(ev){
   if(FS.con) return;
   const t=ev.target;
@@ -863,14 +1148,12 @@ function fClear(){
   }
 }
 
-// Mark flow as having unsaved changes — no DB call, just UI indicator
 function fSave(){
   if(!FI) return;
   const ind = document.getElementById('funsaved');
   if(ind) ind.style.display = 'inline';
 }
 
-// Actually persist to MongoDB — called only when user clicks Save
 async function fSaveNow(){
   if(!FI) return;
   const btn = document.getElementById('fsavebtn');
