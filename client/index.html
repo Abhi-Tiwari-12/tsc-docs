@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>TSC Docs</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f0f2f1;--white:#ffffff;--s2:#f4f6f5;
+  --border:#e0e8e4;--bdark:#c4d4cc;
+  --green:#1a8a5a;--greenh:#158a52;--gdim:#eaf4ef;--gmid:#b5d9c8;
+  --text:#18251e;--t2:#3a5245;--t3:#637d72;--t4:#9ab5aa;
+  --sw:228px;--hh:52px;--fh:36px;--r:6px;
+  --sh:0 1px 3px rgba(0,30,15,.07),0 1px 2px rgba(0,30,15,.04);
+  --shm:0 4px 14px rgba(0,30,15,.09),0 2px 4px rgba(0,30,15,.05);
+  --shl:0 8px 32px rgba(0,30,15,.12),0 2px 8px rgba(0,30,15,.06);
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased;font-size:13px}
+
+/* ── HEADER ── */
+header{position:fixed;top:0;left:0;right:0;height:var(--hh);background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding-right:16px;z-index:200}
+.brand{width:var(--sw);display:flex;align-items:center;gap:9px;padding:0 16px;height:100%;border-right:1px solid var(--border);flex-shrink:0}
+.bmark{width:27px;height:27px;background:var(--green);border-radius:6px;display:flex;align-items:center;justify-content:center}
+.bmark svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.bname{font-size:14px;font-weight:700;color:var(--text);letter-spacing:-.3px}.bname em{font-style:normal;color:var(--green)}
+.hbc{display:flex;align-items:center;gap:5px;padding:0 16px;font-size:12px;color:var(--t3);flex:1}
+.hbc .ha{color:var(--text);font-weight:600}
+.hact{display:flex;align-items:center;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:var(--r);border:1px solid transparent;font-family:inherit;font-size:12.5px;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-g{background:0;color:var(--t2);border-color:var(--border)}.btn-g:hover{background:var(--s2);border-color:var(--bdark);color:var(--text)}
+.btn-p{background:var(--green);color:#fff;border-color:var(--green)}.btn-p:hover{background:var(--greenh);box-shadow:0 2px 8px rgba(26,138,90,.28)}
+.btn-sm{padding:4px 10px;font-size:11.5px}
+.btn-danger{background:0;color:#dc2626;border-color:#fca5a5}.btn-danger:hover{background:#fff5f5;border-color:#dc2626}
+
+/* ── LAYOUT ── */
+.layout{display:flex;position:fixed;top:var(--hh);bottom:var(--fh);left:0;right:0;overflow:hidden}
+
+/* ── SIDEBAR ── */
+aside{width:var(--sw);min-width:var(--sw);background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.sbnav{padding:10px 8px 4px}
+.ni{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--r);cursor:pointer;font-size:13px;font-weight:500;color:var(--t3);transition:all .12s;user-select:none;margin-bottom:1px}
+.ni:hover{background:var(--s2);color:var(--text)}.ni.active{background:var(--gdim);color:var(--green);font-weight:600}
+.ni svg{width:14px;height:14px;flex-shrink:0;opacity:.65}.ni.active svg{opacity:1}
+.nbadge{margin-left:auto;background:var(--border);color:var(--t3);font-size:10px;font-weight:600;padding:1px 6px;border-radius:20px;font-family:'JetBrains Mono',monospace}
+.ni.active .nbadge{background:var(--gmid);color:var(--green)}
+.sbdiv{height:1px;background:var(--border);margin:8px 0}
+.sblbl{padding:6px 10px;font-size:10.5px;font-weight:700;color:var(--t4);text-transform:uppercase;letter-spacing:.8px}
+.dlist{flex:1;overflow-y:auto;padding:0 8px 8px}
+.dlist::-webkit-scrollbar{width:3px}.dlist::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.de{display:flex;align-items:center;gap:7px;padding:6px 10px;border-radius:var(--r);cursor:pointer;font-size:12.5px;color:var(--t3);transition:all .12s;margin-bottom:1px}
+.de:hover{background:var(--s2);color:var(--text)}.de.active{background:var(--gdim);color:var(--green)}
+.de svg{width:13px;height:13px;flex-shrink:0;opacity:.5}.de.active svg{opacity:1}
+.de-nm{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+.de-del{opacity:0;background:none;border:none;cursor:pointer;color:var(--t4);font-size:13px;padding:1px 3px;border-radius:3px;transition:all .12px;flex-shrink:0;line-height:1}
+.de:hover .de-del{opacity:1}.de-del:hover{color:#dc2626;background:rgba(220,38,38,.08)}
+.sbadd{margin:8px;padding:7px 10px;border-radius:var(--r);border:1px dashed var(--bdark);background:0;color:var(--t3);font-size:12.5px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all .15s;font-family:inherit;font-weight:500}
+.sbadd:hover{border-color:var(--green);color:var(--green);background:var(--gdim)}
+
+/* ── MAIN ── */
+main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
+
+/* ── EMPTY / LOADING states ── */
+.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.eico{width:60px;height:60px;background:var(--gdim);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
+.eico svg{width:26px;height:26px;stroke:var(--green);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.empty h2{font-size:15px;font-weight:700;color:var(--text)}.empty p{font-size:12.5px;color:var(--t3);text-align:center;max-width:240px;line-height:1.6}
+.spin{width:32px;height:32px;border:3px solid var(--gdim);border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fsl{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:48px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:8px 18px;border-radius:6px;font-size:12.5px;font-weight:500;z-index:999;animation:fsl .2s ease;box-shadow:var(--shm)}
+.toast.err{background:#dc2626}
+
+/* ── DOC EDITOR ── */
+.ew{flex:1;display:flex;flex-direction:column;overflow:hidden;animation:fsl .2s ease}
+.dtb{background:var(--white);border-bottom:1px solid var(--border);padding:0 28px;height:50px;min-height:50px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.dti{background:none;border:none;outline:none;font-family:inherit;font-size:15px;font-weight:700;color:var(--text);flex:1}.dti::placeholder{color:var(--t4)}
+.dmeta{display:flex;align-items:center;gap:10px}
+.spill{display:flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:20px}
+.pill-d{background:#e8f0fe;color:#2563eb}.pill-f{background:var(--gdim);color:var(--green)}
+.savind{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--t4);font-family:'JetBrains Mono',monospace}
+.sdot{width:6px;height:6px;border-radius:50%;background:#22c55e;transition:background .2s}.sdot.dirty{background:#f59e0b}
+.tbar{background:var(--white);border-bottom:1px solid var(--border);padding:5px 28px;display:flex;align-items:center;gap:1px;flex-wrap:wrap}
+.tbsep{width:1px;height:18px;background:var(--border);margin:0 5px}
+.tb{width:26px;height:26px;border-radius:4px;background:none;border:none;cursor:pointer;color:var(--t3);font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .1s}
+.tb:hover{background:var(--s2);color:var(--text)}
+.tb svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+select.tbsel{appearance:none;background:var(--s2);border:1px solid var(--border);outline:none;color:var(--t2);font-size:11.5px;font-family:inherit;cursor:pointer;padding:0 8px;height:26px;border-radius:4px}
+select.tbsel option{background:var(--white)}
+.escroll{flex:1;overflow-y:auto;background:var(--bg);padding:28px 0 16px}
+.escroll::-webkit-scrollbar{width:6px}.escroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.epage{max-width:720px;margin:0 auto;padding:0 36px}
+.ebody{background:var(--white);border-radius:8px;border:1px solid var(--border);padding:40px 48px;min-height:500px;outline:none;font-size:14px;line-height:1.85;color:var(--text);caret-color:var(--green);box-shadow:var(--sh)}
+.ebody:empty::before{content:attr(data-placeholder);color:var(--t4);pointer-events:none}
+.ebody h1{font-size:24px;font-weight:800;margin:22px 0 10px;letter-spacing:-.4px}
+.ebody h2{font-size:18px;font-weight:700;margin:18px 0 8px;letter-spacing:-.2px}
+.ebody h3{font-size:14.5px;font-weight:600;margin:14px 0 6px;color:var(--t2)}
+.ebody p{margin-bottom:9px}.ebody ul,.ebody ol{padding-left:22px;margin-bottom:9px}.ebody li{margin-bottom:3px}
+.ebody blockquote{border-left:3px solid var(--green);margin:14px 0;padding:9px 14px;color:var(--t2);background:var(--gdim);border-radius:0 var(--r) var(--r) 0}
+.ebody code{background:var(--s2);color:#0a5c38;padding:1px 5px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:11.5px;border:1px solid var(--border)}
+.ebody pre{background:#1a2820;border-radius:var(--r);padding:16px;margin:14px 0;overflow-x:auto}
+.ebody pre code{background:none;border:none;color:#a8ffcd;font-size:12px}
+.ebody a{color:var(--green);text-decoration:underline}
+.ebody hr{border:none;border-top:1px solid var(--border);margin:22px 0}
+.efooter{max-width:720px;margin:0 auto;width:100%;padding:7px 36px;display:flex;justify-content:space-between;font-size:11px;color:var(--t4);font-family:'JetBrains Mono',monospace}
+
+/* ── FLOW BUILDER ── */
+.fw{flex:1;display:flex;flex-direction:column;overflow:hidden;animation:fsl .2s ease}
+.ftb{background:var(--white);border-bottom:1px solid var(--border);padding:0 20px;height:50px;min-height:50px;display:flex;align-items:center;gap:12px}
+.fti{background:none;border:none;outline:none;font-family:inherit;font-size:15px;font-weight:700;color:var(--text);flex:1}.fti::placeholder{color:var(--t4)}
+.fcanvas{flex:1;position:relative;overflow:hidden;background:var(--bg)}
+.fgrid{position:absolute;inset:0;background-image:radial-gradient(circle,var(--bdark) 1px,transparent 1px);background-size:22px 22px;pointer-events:none}
+#fsvg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+#ng{position:absolute;inset:0;pointer-events:none;transform-origin:0 0}
+.fn{position:absolute;background:var(--white);border:1.5px solid var(--border);border-radius:8px;box-shadow:var(--shm);cursor:grab;user-select:none;transition:border-color .15s,box-shadow .15s;min-width:165px;max-width:200px}
+.fn:hover{border-color:var(--gmid);box-shadow:var(--shl)}
+.fn.sel{border-color:var(--green);box-shadow:0 0 0 3px rgba(26,138,90,.1),var(--shm)}
+.fn.drag{cursor:grabbing;box-shadow:0 14px 36px rgba(0,30,15,.18);z-index:100}
+.nh{display:flex;align-items:center;gap:7px;padding:8px 11px;border-bottom:1px solid var(--border);border-radius:7px 7px 0 0}
+.ndot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ntitle{font-size:11.5px;font-weight:600;color:var(--text);flex:1;outline:none;background:none;border:none;cursor:text;min-width:0;font-family:inherit;white-space:nowrap;overflow:hidden}
+.ntitle:focus{color:var(--green);cursor:text}
+.nacts{display:flex;gap:1px;opacity:0;transition:opacity .15s}.fn:hover .nacts{opacity:1}
+.nab{width:18px;height:18px;border-radius:3px;background:none;border:none;cursor:pointer;color:var(--t4);font-size:10px;display:flex;align-items:center;justify-content:center;transition:all .1s}
+.nab:hover{background:var(--s2);color:var(--t2)}.ndel:hover{background:rgba(220,38,38,.08)!important;color:#dc2626!important}
+.nb{padding:9px 11px;font-size:11.5px;color:var(--t3);line-height:1.55;min-height:32px;outline:none;cursor:text;word-break:break-word}
+.nb[contenteditable]:empty::before{content:attr(data-placeholder);color:var(--t4);pointer-events:none}
+.nb:focus{cursor:text}
+.nfoot{display:flex;align-items:center;justify-content:space-between;padding:6px 11px;border-top:1px solid var(--border);border-radius:0 0 7px 7px}
+.nbadge{font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:20px;font-family:'JetBrains Mono',monospace;letter-spacing:.3px}
+.nport{width:11px;height:11px;border-radius:50%;border:2px solid var(--bdark);background:var(--white);cursor:crosshair;transition:all .12s}
+.nport:hover{border-color:var(--green);background:var(--green);transform:scale(1.35)}
+.nt-start .ndot{background:#22c55e}.nt-start .nbadge{background:#dcfce7;color:#166534}.nt-start .nh{background:#f0fdf4}
+.nt-process .ndot{background:#3b82f6}.nt-process .nbadge{background:#dbeafe;color:#1e40af}.nt-process .nh{background:#eff6ff}
+.nt-decision .ndot{background:#f59e0b}.nt-decision .nbadge{background:#fef3c7;color:#92400e}.nt-decision .nh{background:#fffbeb}
+.nt-api .ndot{background:var(--green)}.nt-api .nbadge{background:var(--gdim);color:var(--green)}.nt-api .nh{background:var(--gdim)}
+.nt-note .ndot{background:#8b5cf6}.nt-note .nbadge{background:#ede9fe;color:#5b21b6}.nt-note .nh{background:#f5f3ff}
+.nt-end .ndot{background:#ef4444}.nt-end .nbadge{background:#fee2e2;color:#991b1b}.nt-end .nh{background:#fff5f5}
+.ep{fill:none;stroke:var(--bdark);stroke-width:1.5;marker-end:url(#arr);cursor:pointer;pointer-events:stroke;transition:stroke .15s}
+.ep:hover{stroke:var(--gmid);stroke-width:2}.ep.esel{stroke:var(--green);stroke-width:2;marker-end:url(#arrg)}
+.edelbg{fill:transparent;pointer-events:all;cursor:pointer}
+.edelbg:hover,.edelbg.hov{fill:rgba(220,38,38,.1)}
+.edeltx{fill:transparent;pointer-events:none;font-size:9px;dominant-baseline:middle;text-anchor:middle}
+.edeltx.hov{fill:#dc2626}
+.npanel{position:absolute;right:14px;top:14px;width:216px;background:var(--white);border:1px solid var(--border);border-radius:8px;box-shadow:var(--shm);display:flex;flex-direction:column;overflow:hidden;animation:fsl .15s ease;max-height:calc(100% - 28px)}
+.nph{padding:10px 13px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;color:var(--text)}
+.npc{background:none;border:none;cursor:pointer;color:var(--t4);font-size:17px;line-height:1;padding:0 2px}.npc:hover{color:var(--text)}
+.npb{flex:1;padding:10px 11px;overflow-y:auto;display:flex;flex-direction:column;gap:7px}
+.npsec{font-size:10px;font-weight:700;color:var(--t4);text-transform:uppercase;letter-spacing:.8px;margin-top:3px}
+.ntgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.ntcard{padding:8px 9px;border-radius:6px;border:1.5px solid var(--border);cursor:pointer;transition:all .12s;background:var(--white)}
+.ntcard:hover{border-color:var(--green);background:var(--gdim)}
+.ntcdot{width:6px;height:6px;border-radius:50%;margin-bottom:5px}
+.ntclabel{font-size:11px;font-weight:600;color:var(--t2)}.ntcdesc{font-size:10px;color:var(--t4);margin-top:1px}
+.hint{font-size:11px;color:var(--t3);line-height:1.75}
+.zctrl{position:absolute;bottom:14px;left:14px;display:flex;flex-direction:column;background:var(--white);border:1px solid var(--border);border-radius:6px;box-shadow:var(--sh);overflow:hidden}
+.zb{width:30px;height:28px;background:none;border:none;cursor:pointer;color:var(--t3);font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .1s;font-weight:300}
+.zb:hover{background:var(--s2);color:var(--text)}
+.zl{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--t4);text-align:center;padding:2px 0;border-top:1px solid var(--border)}
+
+/* ── FOOTER ── */
+footer{position:fixed;bottom:0;left:0;right:0;height:var(--fh);background:var(--white);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11.5px;color:var(--t4);z-index:200}
+footer span{color:var(--t2);font-weight:500}
+
+/* ── MODAL ── */
+.mback{position:fixed;inset:0;background:rgba(20,35,25,.35);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:500;animation:fi .15s ease}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.modal{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:24px;width:430px;box-shadow:var(--shl)}
+.mttl{font-size:15px;font-weight:700;margin-bottom:16px;color:var(--text)}
+.flbl{font-size:11px;font-weight:700;color:var(--t3);margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:.5px}
+.finp{width:100%;padding:8px 11px;border-radius:var(--r);background:var(--s2);border:1.5px solid var(--border);color:var(--text);font-family:inherit;font-size:13.5px;outline:none;margin-bottom:14px;transition:border-color .15s}
+.finp:focus{border-color:var(--green);background:var(--white)}
+.trow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.tcard{padding:12px;border-radius:var(--r);border:1.5px solid var(--border);cursor:pointer;transition:all .15s;text-align:left;background:var(--white)}
+.tcard:hover{border-color:var(--bdark);background:var(--s2)}.tcard.sel{border-color:var(--green);background:var(--gdim)}
+.tcard-ico{font-size:20px;margin-bottom:6px}.tcard-lbl{font-size:13px;font-weight:600;color:var(--text)}.tcard-desc{font-size:11px;color:var(--t3);margin-top:2px}
+.mact{display:flex;gap:8px;justify-content:flex-end;padding-top:14px;border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="bmark"><svg viewBox="0 0 16 16"><polyline points="1,12 5,8 8,11 15,4"/></svg></div>
+    <span class="bname">TSC <em>Docs</em></span>
+  </div>
+  <div class="hbc">
+    <span id="hbs">Flows</span><span>›</span><span class="ha" id="hbd">—</span>
+  </div>
+  <div class="hact">
+    <button class="btn btn-g" onclick="doSearch()">
+      <svg style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><line x1="10.5" y1="10.5" x2="14" y2="14"/></svg>
+      Search
+    </button>
+    <button class="btn btn-p" id="hnb" onclick="openModal()">+ New Flow</button>
+  </div>
+</header>
+
+<div class="layout">
+  <aside>
+    <div class="sbnav">
+      <div class="ni active" id="nav-flows" onclick="sw('flows')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="3" cy="8" r="1.8"/><circle cx="13" cy="3.5" r="1.8"/><circle cx="13" cy="12.5" r="1.8"/><line x1="4.8" y1="8" x2="11.2" y2="4.3"/><line x1="4.8" y1="8" x2="11.2" y2="11.7"/></svg>
+        Flows<span class="nbadge" id="cnt-f"></span>
+      </div>
+      <div class="ni" id="nav-documentation" onclick="sw('documentation')">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="1" width="12" height="14" rx="2"/><line x1="5" y1="5" x2="11" y2="5"/><line x1="5" y1="8" x2="11" y2="8"/><line x1="5" y1="11" x2="8" y2="11"/></svg>
+        Documentation<span class="nbadge" id="cnt-d"></span>
+      </div>
+    </div>
+    <div class="sbdiv"></div>
+    <div class="sblbl" id="sblbl">Flows</div>
+    <div class="dlist" id="dlist"></div>
+    <button class="sbadd" onclick="openModal()">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
+      <span id="sblbl2">New Flow</span>
+    </button>
+  </aside>
+
+  <main id="main">
+    <div class="empty" id="empty">
+      <div class="eico"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
+      <h2>Nothing open</h2>
+      <p>Pick something from the sidebar or create a new item.</p>
+      <button class="btn btn-p" onclick="openModal()">+ Create New</button>
+    </div>
+  </main>
+</div>
+
+<footer>Product by <span>&nbsp;Abhishek Tiwari&nbsp;</span> · D2C</footer>
+
+<!-- MODAL -->
+<div class="mback" id="modal" style="display:none">
+  <div class="modal">
+    <div class="mttl">Create New</div>
+    <label class="flbl">Title</label>
+    <input class="finp" id="minput" placeholder="Give it a clear name…" maxlength="80" onkeydown="if(event.key==='Enter')createItem()"/>
+    <label class="flbl">Type</label>
+    <div class="trow">
+      <div class="tcard sel" id="tc-flows" onclick="selT('flows')">
+        <div class="tcard-ico">⚡</div><div class="tcard-lbl">Flow</div><div class="tcard-desc">Visual node diagram</div>
+      </div>
+      <div class="tcard" id="tc-documentation" onclick="selT('documentation')">
+        <div class="tcard-ico">📄</div><div class="tcard-lbl">Document</div><div class="tcard-desc">Rich text document</div>
+      </div>
+    </div>
+    <div class="mact">
+      <button class="btn btn-g" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-p" onclick="createItem()">Create</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════
+//  CONFIG
+// ════════════════════════════════════════════
+const API = '/api';
+
+// ════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════
+const S = { section:'flows', items:{}, activeId:null, newType:'flows' };
+
+// ════════════════════════════════════════════
+//  TOAST
+// ════════════════════════════════════════════
+function toast(msg, err=false){
+  const el=document.createElement('div');
+  el.className='toast'+(err?' err':'');el.textContent=msg;
+  document.body.appendChild(el);setTimeout(()=>el.remove(),2800);
+}
+
+// ════════════════════════════════════════════
+//  API HELPERS
+// ════════════════════════════════════════════
+async function apiFetch(path, opts={}){
+  const res = await fetch(API+path, {
+    headers:{'Content-Type':'application/json'}, ...opts,
+    body: opts.body ? JSON.stringify(opts.body) : undefined,
+  });
+  const json = await res.json();
+  if(!json.ok) throw new Error(json.error||'API error');
+  return json.data;
+}
+
+// ════════════════════════════════════════════
+//  BOOT
+// ════════════════════════════════════════════
+async function boot(){
+  try{
+    const items = await apiFetch('/items');
+    items.forEach(i => S.items[i._id] = i);
+    renderSB(); updateCnts();
+  }catch(e){ toast('Could not reach server. Is it running?', true); }
+}
+boot();
+
+// ════════════════════════════════════════════
+//  SECTION SWITCH
+// ════════════════════════════════════════════
+function sw(s){
+  S.section=s;
+  ['flows','documentation'].forEach(x=>document.getElementById('nav-'+x).classList.toggle('active',x===s));
+  document.getElementById('sblbl').textContent=s==='flows'?'Flows':'Documentation';
+  document.getElementById('sblbl2').textContent=s==='flows'?'New Flow':'New Document';
+  document.getElementById('hnb').textContent='+ New '+(s==='flows'?'Flow':'Document');
+  document.getElementById('hbs').textContent=s==='flows'?'Flows':'Documentation';
+  S.newType=s; renderSB();
+  if(S.activeId && S.items[S.activeId]?.type!==s){ S.activeId=null; showEmpty(); }
+}
+
+// ════════════════════════════════════════════
+//  SIDEBAR
+// ════════════════════════════════════════════
+function renderSB(){
+  const list=document.getElementById('dlist');
+  const items=Object.values(S.items).filter(d=>d.type===S.section).sort((a,b)=>new Date(b.updatedAt)-new Date(a.updatedAt));
+  const ico = S.section==='flows'
+    ? `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="3" cy="8" r="1.5"/><circle cx="13" cy="3.5" r="1.5"/><circle cx="13" cy="12.5" r="1.5"/><line x1="4.5" y1="8" x2="11.5" y2="4.3"/><line x1="4.5" y1="8" x2="11.5" y2="11.7"/></svg>`
+    : `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="1" width="12" height="14" rx="2"/><line x1="5" y1="5" x2="11" y2="5"/><line x1="5" y1="8" x2="9" y2="8"/></svg>`;
+  list.innerHTML = items.length
+    ? items.map(d=>`<div class="de${d._id===S.activeId?' active':''}" onclick="openItem('${d._id}')">${ico}<span class="de-nm">${esc(d.title||'Untitled')}</span><button class="de-del" onclick="delItem(event,'${d._id}')" title="Delete">✕</button></div>`).join('')
+    : '<div style="padding:12px 10px;font-size:12px;color:var(--t4);text-align:center">No items yet</div>';
+}
+function updateCnts(){
+  const f=Object.values(S.items).filter(d=>d.type==='flows').length;
+  const d=Object.values(S.items).filter(d=>d.type==='documentation').length;
+  document.getElementById('cnt-f').textContent=f||'';
+  document.getElementById('cnt-d').textContent=d||'';
+}
+
+// ════════════════════════════════════════════
+//  OPEN ITEM
+// ════════════════════════════════════════════
+async function openItem(id){
+  S.activeId=id;
+  showEmpty(false);
+  const spinner=document.createElement('div');
+  spinner.className='empty';spinner.innerHTML='<div class="spin"></div>';
+  document.getElementById('main').appendChild(spinner);
+  try{
+    const item = await apiFetch('/items/'+id);
+    S.items[id]=item;
+    spinner.remove();
+    document.getElementById('hbd').textContent=item.title||'Untitled';
+    if(item.type!==S.section)sw(item.type);
+    item.type==='flows'?renderFlow(item):renderDoc(item);
+    renderSB();
+  }catch(e){ spinner.remove(); toast('Failed to load item',true); showEmpty(); }
+}
+function showEmpty(show=true){
+  document.getElementById('empty').style.display=show?'flex':'none';
+  document.querySelectorAll('.ew,.fw,.empty:not(#empty)').forEach(el=>el.remove());
+  if(show)stopFlow();
+}
+
+// ════════════════════════════════════════════
+//  MODAL
+// ════════════════════════════════════════════
+function openModal(){ document.getElementById('minput').value=''; selT(S.section); document.getElementById('modal').style.display='flex'; setTimeout(()=>document.getElementById('minput').focus(),60); }
+function closeModal(){ document.getElementById('modal').style.display='none'; }
+function selT(t){ S.newType=t; document.getElementById('tc-flows').classList.toggle('sel',t==='flows'); document.getElementById('tc-documentation').classList.toggle('sel',t==='documentation'); }
+
+async function createItem(){
+  const title=document.getElementById('minput').value.trim()||'Untitled';
+  closeModal();
+  try{
+    const item=await apiFetch('/items',{method:'POST',body:{title,type:S.newType}});
+    S.items[item._id]=item;
+    updateCnts(); sw(S.newType); renderSB();
+    openItem(item._id);
+  }catch(e){ toast('Failed to create item',true); }
+}
+
+async function delItem(e,id){
+  e.stopPropagation();
+  if(!confirm('Delete this item? This cannot be undone.'))return;
+  try{
+    await apiFetch('/items/'+id,{method:'DELETE'});
+    delete S.items[id];
+    if(S.activeId===id){ S.activeId=null; showEmpty(); }
+    renderSB(); updateCnts();
+    toast('Deleted successfully');
+  }catch(err){ toast('Failed to delete',true); }
+}
+
+document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal'))closeModal()});
+document.addEventListener('keydown',e=>{ if((e.metaKey||e.ctrlKey)&&e.key==='n'){e.preventDefault();openModal()} if(e.key==='Escape')closeModal(); if((e.metaKey||e.ctrlKey)&&e.key==='s'&&FI){e.preventDefault();fSaveNow();} });
+
+// ════════════════════════════════════════════
+//  AUTO-SAVE helper
+// ════════════════════════════════════════════
+const saveTimers={};
+function scheduleSave(id, payload, dotId, statusId){
+  if(document.getElementById(dotId)) document.getElementById(dotId).classList.add('dirty');
+  if(document.getElementById(statusId)) document.getElementById(statusId).textContent='Saving…';
+  clearTimeout(saveTimers[id]);
+  saveTimers[id]=setTimeout(async()=>{
+    try{
+      const updated=await apiFetch('/items/'+id,{method:'PATCH',body:payload});
+      S.items[id]=updated; renderSB(); updateCnts();
+      if(document.getElementById(dotId)) document.getElementById(dotId).classList.remove('dirty');
+      if(document.getElementById(statusId)) document.getElementById(statusId).textContent='Saved';
+    }catch(err){ toast('Auto-save failed — check connection',true); }
+  },900);
+}
+
+// ════════════════════════════════════════════
+//  DOC EDITOR
+// ════════════════════════════════════════════
+function renderDoc(item){
+  const m=document.getElementById('main'),w=document.createElement('div');
+  w.className='ew';
+  w.innerHTML=`
+    <div class="dtb">
+      <input class="dti" id="dti" placeholder="Untitled Document" value="${esc(item.title||'')}"/>
+      <div class="dmeta">
+        <span class="spill pill-d">DOCUMENT</span>
+        <div class="savind"><div class="sdot" id="sdot"></div><span id="sstat">Saved</span></div>
+      </div>
+    </div>
+    <div class="tbar">
+      <select class="tbsel" onchange="fB(this.value);this.value='p'">
+        <option value="p">Paragraph</option><option value="h1">Heading 1</option>
+        <option value="h2">Heading 2</option><option value="h3">Heading 3</option>
+      </select>
+      <div class="tbsep"></div>
+      <button class="tb" onclick="f('bold')" title="Bold"><b style="font-size:13px">B</b></button>
+      <button class="tb" onclick="f('italic')" title="Italic"><i style="font-size:13px">I</i></button>
+      <button class="tb" onclick="f('underline')" title="Underline"><u style="font-size:12px">U</u></button>
+      <button class="tb" onclick="f('strikeThrough')" title="Strike"><s style="font-size:12px">S</s></button>
+      <div class="tbsep"></div>
+      <button class="tb" onclick="f('insertUnorderedList')" title="Bullets"><svg viewBox="0 0 16 16"><circle cx="2.5" cy="4" r="1.2" fill="currentColor"/><line x1="5" y1="4" x2="14" y2="4"/><circle cx="2.5" cy="8" r="1.2" fill="currentColor"/><line x1="5" y1="8" x2="14" y2="8"/><circle cx="2.5" cy="12" r="1.2" fill="currentColor"/><line x1="5" y1="12" x2="14" y2="12"/></svg></button>
+      <button class="tb" onclick="f('insertOrderedList')" title="Numbered"><svg viewBox="0 0 16 16"><text x="1" y="5.5" font-size="5" fill="currentColor">1.</text><line x1="5" y1="4" x2="14" y2="4"/><text x="1" y="9.5" font-size="5" fill="currentColor">2.</text><line x1="5" y1="8" x2="14" y2="8"/><text x="1" y="13.5" font-size="5" fill="currentColor">3.</text><line x1="5" y1="12" x2="14" y2="12"/></svg></button>
+      <button class="tb" onclick="f('formatBlock','blockquote')" title="Quote"><svg viewBox="0 0 16 16"><path d="M2 4h5v5H2zm7 0h5v5h-5zM2 4v5c0 3 2 4 4 5M9 4v5c0 3 2 4 4 5" stroke-linecap="round"/></svg></button>
+      <div class="tbsep"></div>
+      <button class="tb" onclick="iCode()" title="Code"><span style="font-family:'JetBrains Mono',monospace;font-size:10px">&lt;/&gt;</span></button>
+      <button class="tb" onclick="iLink()" title="Link"><svg viewBox="0 0 16 16"><path d="M6 9a3 3 0 0 0 4.5.4l2-2a3 3 0 0 0-4.2-4.2l-1.1 1.1"/><path d="M10 7a3 3 0 0 0-4.5-.4l-2 2a3 3 0 0 0 4.2 4.2l1.1-1.1"/></svg></button>
+      <button class="tb" onclick="f('insertHorizontalRule')" title="HR"><svg viewBox="0 0 16 16"><line x1="2" y1="8" x2="14" y2="8" stroke-width="2"/></svg></button>
+    </div>
+    <div class="escroll"><div class="epage">
+      <div class="ebody" id="ebody" contenteditable="true" data-placeholder="Start writing your document…"></div>
+    </div><div class="efooter"><span id="wclbl">0 words</span><span id="tslbl"></span></div></div>`;
+  m.appendChild(w);
+  const b=document.getElementById('ebody');
+  b.innerHTML=item.content||'';
+  b.addEventListener('input',()=>{
+    const wc=b.innerText.trim().split(/\s+/).filter(Boolean).length;
+    document.getElementById('wclbl').textContent=wc+' word'+(wc!==1?'s':'');
+    scheduleSave(item._id,{content:b.innerHTML},'sdot','sstat');
+  });
+  document.getElementById('dti').addEventListener('input',function(){
+    document.getElementById('hbd').textContent=this.value||'Untitled';
+    S.items[item._id].title=this.value;
+    renderSB();
+    scheduleSave(item._id,{title:this.value},'sdot','sstat');
+  });
+  const wc=b.innerText.trim().split(/\s+/).filter(Boolean).length;
+  document.getElementById('wclbl').textContent=wc+' word'+(wc!==1?'s':'');
+}
+function f(cmd,val){document.execCommand(cmd,false,val||null);document.getElementById('ebody')?.focus()}
+function fB(tag){document.execCommand('formatBlock',false,tag);document.getElementById('ebody')?.focus()}
+function iCode(){const s=window.getSelection()?.toString();document.execCommand('insertHTML',false,`<code>${s||'code'}</code>`)}
+function iLink(){const u=prompt('URL:');if(u)document.execCommand('createLink',false,u)}
+
+// ════════════════════════════════════════════
+//  FLOW BUILDER
+// ════════════════════════════════════════════
+const NT={
+  start:    {l:'Start',    c:'#22c55e', b:'START',    cls:'nt-start',    d:'Entry point'},
+  process:  {l:'Process',  c:'#3b82f6', b:'PROCESS',  cls:'nt-process',  d:'Action step'},
+  decision: {l:'Decision', c:'#f59e0b', b:'DECISION', cls:'nt-decision', d:'Branch / if'},
+  api:      {l:'API Call', c:'#1a8a5a', b:'API',      cls:'nt-api',      d:'External call'},
+  note:     {l:'Note',     c:'#8b5cf6', b:'NOTE',     cls:'nt-note',     d:'Annotation'},
+  end:      {l:'End',      c:'#ef4444', b:'END',      cls:'nt-end',      d:'Terminal'},
+};
+
+let FS={nodes:[],edges:[],sel:null,esel:null,drag:null,dox:0,doy:0,con:null,zoom:1,px:0,py:0,pan:false,psx:0,psy:0};
+let FI=null, cline=null;
+
+function stopFlow(){
+  FI=null;
+  FS={nodes:[],edges:[],sel:null,esel:null,drag:null,dox:0,doy:0,con:null,zoom:1,px:0,py:0,pan:false,psx:0,psy:0};
+  if(cline){cline.remove();cline=null}
+}
+
+function renderFlow(item){
+  FI=item;
+  FS={
+    nodes: item.nodes ? JSON.parse(JSON.stringify(item.nodes)) : [],
+    edges: item.edges ? JSON.parse(JSON.stringify(item.edges)) : [],
+    sel:null, esel:null, drag:null, con:null,
+    zoom: item.zoom||1, px: item.panX||0, py: item.panY||0,
+    pan:false, psx:0, psy:0, dox:0, doy:0
+  };
+  const m=document.getElementById('main'), w=document.createElement('div');
+  w.className='fw'; w.id='fw';
+  w.innerHTML=`
+    <div class="ftb">
+      <input class="fti" id="fti" placeholder="Untitled Flow" value="${esc(item.title||'')}"/>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="spill pill-f">FLOW</span>
+        <span id="funsaved" style="display:none;font-size:11px;color:var(--t4);font-family:'JetBrains Mono',monospace">● Unsaved</span>
+        <button class="btn btn-g btn-sm" onclick="fFit()">Fit</button>
+        <button class="btn btn-g btn-sm" onclick="fClear()">Clear</button>
+        <button class="btn btn-g btn-sm" onclick="togglePanel()">+ Node</button>
+        <button class="btn btn-p btn-sm" id="fsavebtn" onclick="fSaveNow()">
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H5L2 5v9a1 1 0 001 1h10a1 1 0 001-1V3a1 1 0 00-1-1z"/><rect x="5" y="9" width="6" height="5" rx=".5"/><rect x="5" y="2" width="5" height="4" rx=".5"/></svg>
+          Save
+        </button>
+      </div>
+    </div>
+    <div class="fcanvas" id="fcanvas">
+      <div class="fgrid"></div>
+      <svg id="fsvg" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none">
+        <defs>
+          <marker id="arr"  markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#c4d4cc"/></marker>
+          <marker id="arrg" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#1a8a5a"/></marker>
+        </defs>
+        <g id="eg"></g>
+      </svg>
+      <div id="ng" style="position:absolute;inset:0;pointer-events:none;transform-origin:0 0"></div>
+      <div class="npanel" id="npanel">
+        <div class="nph">Add Node<button class="npc" onclick="togglePanel()">×</button></div>
+        <div class="npb">
+          <div class="npsec">Types</div>
+          <div class="ntgrid" id="ntgrid"></div>
+          <div class="npsec" style="margin-top:6px">Tips</div>
+          <div class="hint">
+            <div>• Click a type to add it</div>
+            <div>• Drag nodes to reposition</div>
+            <div>• Hover → port (●) to connect</div>
+            <div>• Hover edge → × to remove</div>
+            <div>• Scroll to zoom · drag to pan</div>
+          </div>
+        </div>
+      </div>
+      <div class="zctrl">
+        <button class="zb" onclick="chZ(.15)">+</button>
+        <div class="zl" id="zlbl">100%</div>
+        <button class="zb" onclick="chZ(-.15)">−</button>
+      </div>
+    </div>`;
+  m.appendChild(w);
+
+  document.getElementById('fti').addEventListener('input', function(){
+    document.getElementById('hbd').textContent = this.value||'Untitled';
+    S.items[item._id].title = this.value;
+    if(FI) FI.title = this.value;
+    renderSB();
+    fSave(); // just marks dirty
+  });
+
+  // Build node type cards
+  const g=document.getElementById('ntgrid');
+  Object.entries(NT).forEach(([k,t])=>{
+    const c=document.createElement('div'); c.className='ntcard';
+    c.innerHTML=`<div class="ntcdot" style="background:${t.c}"></div><div class="ntclabel">${t.l}</div><div class="ntcdesc">${t.d}</div>`;
+    c.onclick=()=>addN(k); g.appendChild(c);
+  });
+
+  const fc=document.getElementById('fcanvas');
+  fc.addEventListener('mousedown', fcMD);
+  fc.addEventListener('mousemove', fcMM);
+  fc.addEventListener('mouseup',   fcMU);
+  fc.addEventListener('wheel',     fcW, {passive:false});
+
+  if(!FS.nodes.length){ addN('start',80,100); addN('process',300,100); addN('end',520,100); }
+  else drawFlow();
+}
+
+function togglePanel(){
+  const p=document.getElementById('npanel');
+  if(p) p.style.display = p.style.display==='none' ? 'flex' : 'none';
+}
+
+function addN(type, x, y){
+  const fc=document.getElementById('fcanvas'); if(!fc)return;
+  const r=fc.getBoundingClientRect();
+  const nx = x!=null ? x : (r.width/2  - FS.px)/FS.zoom - 85;
+  const ny = y!=null ? y : (r.height/2 - FS.py)/FS.zoom - 45;
+  const id = 'n'+Date.now()+Math.random().toString(36).slice(2,4);
+  FS.nodes.push({id, type, title:NT[type].l, body:'', x:nx, y:ny});
+  drawFlow(); fSave();
+}
+
+// ── CORE DRAW — only redraws when NOT typing ──────────────────────
+function drawFlow(){
+  const ng=document.getElementById('ng'), eg=document.getElementById('eg');
+  if(!ng||!eg) return;
+
+  // Remember which node has focus and cursor position
+  const activeEl = document.activeElement;
+  const focusedNodeId   = activeEl?.dataset?.nid  || null;
+  const focusedField    = activeEl?.dataset?.field || null; // 'title' or 'body'
+
+  ng.style.transform = `translate(${FS.px}px,${FS.py}px) scale(${FS.zoom})`;
+  document.querySelector('#fsvg g')?.setAttribute('transform',
+    `translate(${FS.px},${FS.py}) scale(${FS.zoom})`);
+  document.getElementById('zlbl').textContent = Math.round(FS.zoom*100)+'%';
+
+  // ── Reconcile nodes: update existing DOM els, add new, remove old ──
+  const existingEls = {};
+  ng.querySelectorAll('.fn').forEach(el => { existingEls[el.dataset.nid] = el; });
+
+  const renderedIds = new Set();
+  FS.nodes.forEach(n => {
+    renderedIds.add(n.id);
+    let el = existingEls[n.id];
+    if(el){
+      // Just reposition — don't touch innerHTML so focus/cursor is preserved
+      el.style.left = n.x+'px';
+      el.style.top  = n.y+'px';
+      el.classList.toggle('sel', FS.sel===n.id);
+    } else {
+      el = mkNode(n);
+      ng.appendChild(el);
+    }
+  });
+
+  // Remove nodes no longer in state
+  Object.keys(existingEls).forEach(id => {
+    if(!renderedIds.has(id)) existingEls[id].remove();
+  });
+
+  // Always redraw edges (SVG, no focus issues)
+  eg.innerHTML='';
+  FS.edges.forEach(e => eg.appendChild(mkEdge(e)));
+}
+
+function mkNode(n){
+  const t = NT[n.type]||NT.process;
+  const el = document.createElement('div');
+  el.className = `fn ${t.cls}${FS.sel===n.id?' sel':''}`;
+  el.id = 'fn'+n.id;
+  el.dataset.nid = n.id;
+  el.style.cssText = `left:${n.x}px;top:${n.y}px;pointer-events:all`;
+
+  el.innerHTML=`
+    <div class="nh">
+      <div class="ndot"></div>
+      <div class="ntitle"
+           contenteditable="true"
+           spellcheck="false"
+           data-nid="${n.id}"
+           data-field="title"
+           data-placeholder="Title…">${esc(n.title)}</div>
+      <div class="nacts">
+        <button class="nab ndel" title="Delete">
+          <svg width="9" height="9" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <line x1="1" y1="1" x2="9" y2="9"/><line x1="9" y1="1" x2="1" y2="9"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="nb"
+         contenteditable="true"
+         data-placeholder="Description…"
+         spellcheck="false"
+         data-nid="${n.id}"
+         data-field="body">${esc(n.body)}</div>
+    <div class="nfoot">
+      <span class="nbadge">${t.b}</span>
+      <div class="nport" title="Drag to connect"></div>
+    </div>`;
+
+  // Title input — update state WITHOUT redrawing
+  el.querySelector('.ntitle').addEventListener('input', function(ev){
+    ev.stopPropagation();
+    const node = FS.nodes.find(x=>x.id===n.id);
+    if(node) node.title = this.innerText;
+    fSave();
+  });
+
+  // Body input — update state WITHOUT redrawing
+  el.querySelector('.nb').addEventListener('input', function(ev){
+    ev.stopPropagation();
+    const node = FS.nodes.find(x=>x.id===n.id);
+    if(node) node.body = this.innerText;
+    fSave();
+  });
+
+  // Delete button
+  el.querySelector('.ndel').addEventListener('click', ev=>{
+    ev.stopPropagation(); delN(n.id);
+  });
+
+  // Port — start connection
+  el.querySelector('.nport').addEventListener('mousedown', ev=>{
+    startCon(ev, n.id);
+  });
+
+  // Drag (only from non-editable areas)
+  el.addEventListener('mousedown', ev => nMD(ev, n.id));
+  el.addEventListener('click',     ev => selN(ev, n.id));
+
+  return el;
+}
+
+function mkEdge(e){
+  const from=FS.nodes.find(n=>n.id===e.from), to=FS.nodes.find(n=>n.id===e.to);
+  const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+  if(!from||!to) return g;
+  const x1=from.x+82, y1=from.y+88, x2=to.x+82, y2=to.y, cy=(y1+y2)/2;
+  const d=`M${x1},${y1} C${x1},${cy} ${x2},${cy} ${x2},${y2}`;
+  const sel=FS.esel===e.id;
+
+  const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+  p.setAttribute('d',d);
+  p.setAttribute('class','ep'+(sel?' esel':''));
+  p.setAttribute('marker-end', sel?'url(#arrg)':'url(#arr)');
+  p.style.pointerEvents='stroke';
+  p.addEventListener('click', ev=>{ ev.stopPropagation(); FS.esel=e.id; FS.sel=null; drawFlow(); });
+
+  const mx=(x1+x2)/2, my=(y1+y2)/2;
+  const dbg=document.createElementNS('http://www.w3.org/2000/svg','circle');
+  dbg.setAttribute('cx',mx); dbg.setAttribute('cy',my); dbg.setAttribute('r','8');
+  dbg.setAttribute('class','edelbg'+(sel?' hov':''));
+
+  const dtx=document.createElementNS('http://www.w3.org/2000/svg','text');
+  dtx.setAttribute('x',mx); dtx.setAttribute('y',my);
+  dtx.setAttribute('class','edeltx'+(sel?' hov':'')); dtx.textContent='✕';
+
+  dbg.addEventListener('click', ev=>{ ev.stopPropagation(); delE(e.id); });
+  p.addEventListener('mouseenter', ()=>{ dbg.classList.add('hov'); dtx.classList.add('hov'); });
+  p.addEventListener('mouseleave', ()=>{ if(FS.esel!==e.id){ dbg.classList.remove('hov'); dtx.classList.remove('hov'); } });
+
+  g.appendChild(p); g.appendChild(dbg); g.appendChild(dtx);
+  return g;
+}
+
+// ── NODE INTERACTION ─────────────────────────────────────────────
+function nMD(ev, id){
+  // Don't drag when clicking editable content or buttons
+  if(ev.target.isContentEditable) return;
+  if(ev.target.classList.contains('nport') || ev.target.closest('.nab')) return;
+  ev.stopPropagation();
+  const fc=document.getElementById('fcanvas'); if(!fc)return;
+  const n=FS.nodes.find(x=>x.id===id), r=fc.getBoundingClientRect();
+  FS.drag=id;
+  FS.dox=(ev.clientX-r.left-FS.px)/FS.zoom - n.x;
+  FS.doy=(ev.clientY-r.top -FS.py)/FS.zoom - n.y;
+  document.getElementById('fn'+id)?.classList.add('drag');
+}
+
+function selN(ev, id){
+  if(FS.drag) return;
+  if(ev.target.isContentEditable) return;
+  FS.sel = FS.sel===id ? null : id;
+  FS.esel = null;
+  drawFlow();
+}
+
+function delN(id){
+  FS.nodes = FS.nodes.filter(n=>n.id!==id);
+  FS.edges = FS.edges.filter(e=>e.from!==id && e.to!==id);
+  if(FS.sel===id) FS.sel=null;
+  drawFlow(); fSave();
+}
+
+function delE(id){
+  FS.edges = FS.edges.filter(e=>e.id!==id);
+  FS.esel=null; drawFlow(); fSave();
+}
+
+// ── CONNECTION DRAWING ───────────────────────────────────────────
+function startCon(ev, fid){
+  ev.stopPropagation(); ev.preventDefault();
+  FS.con=fid;
+  cline=document.createElementNS('http://www.w3.org/2000/svg','path');
+  cline.setAttribute('fill','none');
+  cline.setAttribute('stroke','#1a8a5a');
+  cline.setAttribute('stroke-width','1.5');
+  cline.setAttribute('stroke-dasharray','5,3');
+  cline.style.pointerEvents='none';
+  document.getElementById('eg')?.appendChild(cline);
+}
+
+// ── CANVAS EVENTS ────────────────────────────────────────────────
+function fcMD(ev){
+  if(FS.con) return;
+  const t=ev.target;
+  if(t.id==='fcanvas'||t.classList.contains('fgrid')||t===document.getElementById('fsvg')||t.tagName==='svg'){
+    FS.pan=true; FS.psx=ev.clientX-FS.px; FS.psy=ev.clientY-FS.py;
+    document.getElementById('fcanvas').style.cursor='grabbing';
+  }
+}
+
+function fcMM(ev){
+  if(FS.drag){
+    const fc=document.getElementById('fcanvas'); if(!fc)return;
+    const r=fc.getBoundingClientRect(), n=FS.nodes.find(x=>x.id===FS.drag); if(!n)return;
+    n.x=(ev.clientX-r.left-FS.px)/FS.zoom - FS.dox;
+    n.y=(ev.clientY-r.top -FS.py)/FS.zoom - FS.doy;
+    drawFlow(); return;
+  }
+  if(FS.con && cline){
+    const fc=document.getElementById('fcanvas'); if(!fc)return;
+    const r=fc.getBoundingClientRect(), fn=FS.nodes.find(x=>x.id===FS.con); if(!fn)return;
+    const x1=fn.x+82, y1=fn.y+88;
+    const x2=(ev.clientX-r.left-FS.px)/FS.zoom;
+    const y2=(ev.clientY-r.top -FS.py)/FS.zoom;
+    const cy=(y1+y2)/2;
+    cline.setAttribute('d',`M${x1},${y1} C${x1},${cy} ${x2},${cy} ${x2},${y2}`);
+    return;
+  }
+  if(FS.pan){ FS.px=ev.clientX-FS.psx; FS.py=ev.clientY-FS.psy; drawFlow(); }
+}
+
+function fcMU(ev){
+  if(FS.con){
+    const el=document.elementFromPoint(ev.clientX, ev.clientY);
+    const ne=el?.closest('.fn');
+    if(ne){
+      const tid=ne.dataset.nid;
+      if(tid && tid!==FS.con && !FS.edges.find(e=>e.from===FS.con&&e.to===tid)){
+        FS.edges.push({id:'e'+Date.now(), from:FS.con, to:tid});
+        fSave();
+      }
+    }
+    if(cline){ cline.remove(); cline=null; }
+    FS.con=null; drawFlow(); return;
+  }
+  if(FS.drag){
+    document.getElementById('fn'+FS.drag)?.classList.remove('drag');
+    FS.drag=null; fSave();
+  }
+  if(FS.pan){ FS.pan=false; document.getElementById('fcanvas').style.cursor=''; }
+}
+
+function fcW(ev){
+  ev.preventDefault();
+  const fc=document.getElementById('fcanvas'); if(!fc)return;
+  const r=fc.getBoundingClientRect();
+  const d=-ev.deltaY*.001;
+  const nz=Math.min(2.5, Math.max(.2, FS.zoom+d));
+  const mx=ev.clientX-r.left, my=ev.clientY-r.top;
+  FS.px=mx-(mx-FS.px)*nz/FS.zoom;
+  FS.py=my-(my-FS.py)*nz/FS.zoom;
+  FS.zoom=nz; drawFlow();
+}
+
+function chZ(d){ FS.zoom=Math.min(2.5,Math.max(.2,FS.zoom+d)); drawFlow(); }
+
+function fFit(){
+  if(!FS.nodes.length) return;
+  const fc=document.getElementById('fcanvas'); if(!fc)return;
+  const r=fc.getBoundingClientRect();
+  const xs=FS.nodes.map(n=>n.x), ys=FS.nodes.map(n=>n.y);
+  const mnx=Math.min(...xs), mxx=Math.max(...xs)+170;
+  const mny=Math.min(...ys), mxy=Math.max(...ys)+100;
+  FS.zoom=Math.min((r.width-60)/(mxx-mnx||1),(r.height-60)/(mxy-mny||1),1.4);
+  FS.px=30-mnx*FS.zoom; FS.py=30-mny*FS.zoom; drawFlow();
+}
+
+function fClear(){
+  if(confirm('Clear all nodes?')){
+    FS.nodes=[]; FS.edges=[]; drawFlow(); fSave();
+  }
+}
+
+// Mark flow as having unsaved changes — no DB call, just UI indicator
+function fSave(){
+  if(!FI) return;
+  const ind = document.getElementById('funsaved');
+  if(ind) ind.style.display = 'inline';
+}
+
+// Actually persist to MongoDB — called only when user clicks Save
+async function fSaveNow(){
+  if(!FI) return;
+  const btn = document.getElementById('fsavebtn');
+  if(btn){ btn.disabled=true; btn.textContent='Saving…'; }
+  try{
+    const updated = await apiFetch('/items/'+FI._id, {
+      method:'PATCH',
+      body:{
+        title: document.getElementById('fti')?.value || FI.title || 'Untitled',
+        nodes: JSON.parse(JSON.stringify(FS.nodes)),
+        edges: JSON.parse(JSON.stringify(FS.edges)),
+        zoom:  FS.zoom,
+        panX:  FS.px,
+        panY:  FS.py,
+      }
+    });
+    S.items[FI._id] = updated;
+    renderSB(); updateCnts();
+    const ind = document.getElementById('funsaved');
+    if(ind) ind.style.display = 'none';
+    toast('Flow saved');
+  }catch(e){
+    toast('Save failed — check connection', true);
+  }finally{
+    if(btn){
+      btn.disabled=false;
+      btn.innerHTML=`<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H5L2 5v9a1 1 0 001 1h10a1 1 0 001-1V3a1 1 0 00-1-1z"/><rect x="5" y="9" width="6" height="5" rx=".5"/><rect x="5" y="2" width="5" height="4" rx=".5"/></svg> Save`;
+    }
+  }
+}
+
+// ════════════════════════════════════════════
+//  SEARCH
+// ════════════════════════════════════════════
+function doSearch(){
+  const q=prompt('Search:'); if(!q)return;
+  const r=Object.values(S.items).filter(d=>d.title?.toLowerCase().includes(q.toLowerCase()));
+  if(!r.length){ toast('Nothing found'); return; }
+  if(r.length===1){ sw(r[0].type); openItem(r[0]._id); return; }
+  const c=prompt(r.map((d,i)=>`${i+1}. [${d.type}] ${d.title}`).join('\n')+'\n\nEnter number:');
+  const ix=parseInt(c);
+  if(ix>0 && r[ix-1]){ sw(r[ix-1].type); openItem(r[ix-1]._id); }
+}
+
+function esc(s){
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
