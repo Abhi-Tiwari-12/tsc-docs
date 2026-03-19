@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>TSC Docs — Shared Document</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f6f5;--surface:#fff;--s2:#f0f2f0;--border:#e2e8e2;--bdark:#ccd5cc;
+  --accent:#1a8a5a;--accent-bg:#eaf5ef;--accent-mid:#b5d9c8;--accent-text:#0f6642;
+  --text:#18211e;--t2:#3a5045;--t3:#637d72;--t4:#9ab5aa;--t5:#c8d9d2;--red:#dc2626;
+}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Geist',system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.6}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── HEADER ── */
+header{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  height:52px;display:flex;align-items:center;padding:0 28px;gap:14px;
+  position:sticky;top:0;z-index:100;box-shadow:0 1px 0 var(--border);
+}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none}
+.bmark{width:28px;height:28px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bmark svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.bname{font-size:15px;font-weight:700;color:var(--text);letter-spacing:-.4px}
+.bname em{font-style:normal;color:var(--accent)}
+.hdiv{width:1px;height:18px;background:var(--border)}
+.hshared{font-size:12px;color:var(--t3);font-weight:500}
+.hspace{flex:1}
+.shared-badge{
+  display:flex;align-items:center;gap:6px;
+  background:var(--accent-bg);border:1px solid var(--accent-mid);
+  border-radius:20px;padding:5px 13px 5px 10px;
+  font-size:11.5px;font-weight:600;color:var(--accent-text);
+}
+.shared-badge svg{width:12px;height:12px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── PAGE ── */
+.page{max-width:800px;margin:0 auto;padding:36px 24px 80px}
+
+/* ── DOC HEADER ── */
+.doc-hd{margin-bottom:20px;animation:fadeUp .2s ease}
+.doc-title{font-size:28px;font-weight:800;color:var(--text);letter-spacing:-.6px;line-height:1.2;margin-bottom:10px}
+.doc-meta{display:flex;align-items:center;gap:10px}
+.tag-doc{font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;background:#e0f2fe;color:#0369a1;font-family:'Geist Mono',monospace;letter-spacing:.5px}
+.doc-date{font-size:12px;color:var(--t4);font-family:'Geist Mono',monospace}
+.doc-sep{color:var(--t5);font-size:11px}
+.doc-wc{font-size:12px;color:var(--t4);font-family:'Geist Mono',monospace}
+
+/* ── DOC CONTENT CARD ── */
+.doc-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:48px 56px;min-height:400px;animation:fadeUp .25s ease;
+  box-shadow:0 1px 4px rgba(0,30,15,.04);
+}
+.doc-card *{max-width:100%}
+.doc-card h1{font-size:24px;font-weight:800;margin:20px 0 10px;letter-spacing:-.4px;color:var(--text)}
+.doc-card h2{font-size:18px;font-weight:700;margin:18px 0 8px;color:var(--text)}
+.doc-card h3{font-size:15px;font-weight:600;margin:14px 0 6px;color:var(--t2)}
+.doc-card p{margin-bottom:10px;line-height:1.85}
+.doc-card ul,.doc-card ol{padding-left:22px;margin-bottom:10px}
+.doc-card li{margin-bottom:3px;line-height:1.75}
+.doc-card blockquote{border-left:3px solid var(--accent);margin:14px 0;padding:10px 16px;color:var(--t2);background:var(--accent-bg);border-radius:0 6px 6px 0;font-style:italic}
+.doc-card code{background:var(--s2);color:var(--accent-text);padding:1px 6px;border-radius:3px;font-family:'Geist Mono',monospace;font-size:12.5px;border:1px solid var(--border)}
+.doc-card pre{background:#1a2820;border-radius:8px;padding:16px 18px;margin:14px 0;overflow-x:auto}
+.doc-card pre code{background:none;border:none;color:#a8ffcd;font-size:12.5px;padding:0}
+.doc-card a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+.doc-card hr{border:none;border-top:1px solid var(--border);margin:22px 0}
+.doc-card table{border-collapse:collapse;width:auto;margin:10px 0}
+.doc-card table td,.doc-card table th{border:1px solid var(--border);padding:7px 14px;min-width:50px}
+.doc-card table th{background:var(--s2);font-weight:600;font-size:13px}
+.doc-card img{max-width:100%;border-radius:6px;margin:8px 0;display:block}
+.doc-empty{color:var(--t4);font-style:italic;font-size:14px}
+
+/* ── STATES ── */
+.state{
+  min-height:60vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:12px;text-align:center;
+}
+.state-ico{width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
+.state-ico.green{background:var(--accent-bg)}
+.state-ico.red{background:#fef2f2}
+.state-ico svg{width:28px;height:28px;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.state-ico.green svg{stroke:var(--accent)}.state-ico.red svg{stroke:var(--red)}
+.state-h{font-size:17px;font-weight:700;color:var(--text)}
+.state-p{font-size:13px;color:var(--t3);max-width:300px;line-height:1.7}
+.spinner{width:34px;height:34px;border:2.5px solid var(--s2);border-top-color:var(--accent);border-radius:50%;animation:spin .65s linear infinite}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--border);padding:16px 28px;
+  display:flex;align-items:center;justify-content:center;gap:16px;
+  font-size:12px;color:var(--t4);
+}
+.f-brand{display:flex;align-items:center;gap:6px;font-weight:600;color:var(--t2)}
+.f-brand .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);display:inline-block}
+.readonly-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:12px;background:var(--s2);
+  color:var(--t3);font-size:11px;font-weight:500;border:1px solid var(--border);
+}
+.readonly-pill svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+@media(max-width:640px){
+  .doc-card{padding:28px 22px}
+  .doc-title{font-size:22px}
+  header{padding:0 16px}
+  .page{padding:20px 14px 60px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="https://tsc-docs.onrender.com">
+    <div class="bmark"><svg viewBox="0 0 14 14"><polyline points="1,11 5,7 8,10 13,3"/></svg></div>
+    <span class="bname">TSC <em>Docs</em></span>
+  </a>
+  <div class="hdiv"></div>
+  <span class="hshared">Shared Document</span>
+  <div class="hspace"></div>
+  <div class="shared-badge">
+    <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5"/><path d="M5.5 8a2.5 2.5 0 005 0 2.5 2.5 0 00-5 0"/><line x1="8" y1="1.5" x2="8" y2="4"/><line x1="8" y1="12" x2="8" y2="14.5"/></svg>
+    View Only
+  </div>
+</header>
+
+<div class="page">
+  <!-- Loading -->
+  <div class="state" id="st-loading">
+    <div class="spinner"></div>
+    <p style="color:var(--t4);font-size:13px">Loading document…</p>
+  </div>
+
+  <!-- Error -->
+  <div class="state" id="st-error" style="display:none">
+    <div class="state-ico red">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    </div>
+    <div class="state-h">Document not available</div>
+    <p class="state-p" id="err-msg">This link may have been revoked or the document does not exist.</p>
+  </div>
+
+  <!-- Document -->
+  <div id="doc-wrap" style="display:none">
+    <div class="doc-hd">
+      <div class="doc-title" id="doc-title"></div>
+      <div class="doc-meta">
+        <span class="tag-doc">DOC</span>
+        <span class="doc-sep">·</span>
+        <span class="doc-date" id="doc-date"></span>
+        <span class="doc-sep">·</span>
+        <span class="doc-wc" id="doc-wc"></span>
+      </div>
+    </div>
+    <div class="doc-card" id="doc-content"></div>
+  </div>
+</div>
+
+<footer>
+  <span class="f-brand">
+    <span class="dot"></span> TSC Docs &nbsp;·&nbsp; Product by Abhishek Tiwari &nbsp;·&nbsp; D2C
+  </span>
+  <span class="readonly-pill">
+    <svg viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="8" rx="1.5"/><path d="M5 7V5a3 3 0 016 0v2"/></svg>
+    Read-only
+  </span>
+</footer>
+
+<script>
+const BASE = 'https://tsc-docs.onrender.com';
+
+async function load() {
+  // Extract token from path: /shared/<token>
+  const token = location.pathname.split('/shared/')[1]?.split('/')[0]?.trim();
+
+  if (!token) {
+    showError('No share token found in URL.');
+    return;
+  }
+
+  try {
+    const res  = await fetch(`${BASE}/api/shared/${token}`);
+    const json = await res.json();
+
+    if (!json.ok) {
+      showError(json.error || 'Document not found or link has been revoked.');
+      return;
+    }
+
+    renderDoc(json.data);
+  } catch (e) {
+    showError('Could not reach the server. Please try again later.');
+  }
+}
+
+function renderDoc(doc) {
+  // Title
+  document.title = `${doc.title || 'Untitled'} — TSC Docs`;
+  document.getElementById('doc-title').textContent = doc.title || 'Untitled';
+
+  // Date
+  const d = doc.updatedAt ? new Date(doc.updatedAt) : null;
+  document.getElementById('doc-date').textContent = d
+    ? d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    : '—';
+
+  // Word count
+  const wc = doc.content
+    ? doc.content.replace(/<[^>]+>/g, ' ').trim().split(/\s+/).filter(Boolean).length
+    : 0;
+  document.getElementById('doc-wc').textContent = `${wc} word${wc !== 1 ? 's' : ''}`;
+
+  // Content — rendered as HTML (was stored as innerHTML from contenteditable)
+  const contentEl = document.getElementById('doc-content');
+  if (doc.content && doc.content.trim()) {
+    contentEl.innerHTML = doc.content;
+    // Make all links open in new tab safely
+    contentEl.querySelectorAll('a').forEach(a => {
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+    });
+  } else {
+    contentEl.innerHTML = '<p class="doc-empty">This document is empty.</p>';
+  }
+
+  // Show
+  document.getElementById('st-loading').style.display = 'none';
+  document.getElementById('doc-wrap').style.display   = 'block';
+}
+
+function showError(msg) {
+  document.getElementById('st-loading').style.display = 'none';
+  document.getElementById('err-msg').textContent      = msg;
+  document.getElementById('st-error').style.display   = 'flex';
+}
+
+load();
+</script>
+</body>
+</html>
